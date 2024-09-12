@@ -1,4 +1,5 @@
 require('dotenv').config();
+const WELCOME_CHANNEL_ID = '1069303933429887066';
 const { Client, GatewayIntentBits, REST, Routes, InteractionType, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require('discord.js');
 
 const client = new Client({
@@ -75,6 +76,15 @@ client.on('interactionCreate', async (interaction) => {
 
     }
     }
+  }
+});
+
+client.on('guildMemberAdd', (member) => {
+  const channel = member.guild.channels.cache.get(WELCOME_CHANNEL_ID);
+  if (channel) {
+      channel.send(`Willkommen auf dem Server, ${member.user.tag}! Schön, dass du hier bist!`);
+  } else {
+      console.log('Channel nicht gefunden!');
   }
 });
 
